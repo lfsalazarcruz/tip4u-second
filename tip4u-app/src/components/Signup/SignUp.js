@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class SignIn extends Component {
 	constructor() {
@@ -14,7 +15,7 @@ class SignIn extends Component {
 
 	render() {
 		return (
-			<form onSubmit={this.changeView}>
+			<form onSubmit={this.registerUser}>
 				<div>
 					<h3>Create an account</h3>
 					<div>
@@ -73,9 +74,20 @@ class SignIn extends Component {
 		this.setState({ [name]: value });
 	}
 
-	changeView = event => {
+	registerUser = event => {
 		event.preventDefault();
-		this.props.history.push('/signin')
+		
+		axios
+		.post('http://localhost:4000/api/register', this.state)
+		.then(res => {
+			console.log('Axios response', res);
+			localStorage.setItem('jwt', res.data.token);
+			this.props.history.push('/signin');
+		})
+		.catch(err => {
+			this.props.history.push('/signin');
+			console.error('Axios response: ', err);
+		})
 	}
 }
 

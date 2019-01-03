@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class SignIn extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 				username: '',
 				password: '',
@@ -11,7 +12,7 @@ class SignIn extends Component {
 
 	render() {
 		return (
-			<form onSubmit={this.changeView}>
+			<form onSubmit={this.login}>
 				<div>
 					<h3>Sign In</h3>
 					<div>
@@ -43,9 +44,20 @@ class SignIn extends Component {
 		this.setState({ [name]: value });
 	}
 
-	changeView = event => {
+	login = event => {
 		event.preventDefault();
-		this.props.history.push('/userview')
+
+		axios
+		.post('http://localhost:4000/api/login', this.state)
+		.then(res => {
+				console.log('Axios response', res);
+        localStorage.setItem('jwt', res.data.token);
+				this.props.history.push('/userview');
+		})
+		.catch(err => {
+			this.props.history.push('/signin');
+			console.log('Axios response: ', err);
+		});
 	}
 }
 
