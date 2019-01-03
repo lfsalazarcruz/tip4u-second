@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import './App.css';
+
+import SignIn from './components/SignIn/SignIn';
+import SignUp from './components/Signup/SignUp';
+import Home from './components/Home/Home';
+import UserView from './components/UserView/UserView';
+import TransferMoney from './components/UserView/TransferMoney/TransferMoney';
+import TransferVerification from './components/UserView/TransferVerification/TransferVerification';
+import SendPayment from './components/UserView/SendPayment/SendPayment';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <div className="App">
+          <Route path="/" component={ Home }/>
+          <Route path="/signin" component={ SignIn } />
+          <Route path="/signup" component={ SignUp } />
+          <Route path="/userview" component={ UserView } />
+          <Route path="/transfer" component={ TransferMoney } />
+          <Route path="/verification" component={ TransferVerification } />
+          <Route path="/send" component={ SendPayment } />
+        </div>
+      </Router>
     );
   }
 }
