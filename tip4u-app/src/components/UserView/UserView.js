@@ -7,7 +7,7 @@ class UserView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: [],
+      users: [],
     };
   }
 	render() {
@@ -17,7 +17,7 @@ class UserView extends Component {
 					<button onClick={this.logout}>Log out</button>
           {/* mapping through data array */}
           <ul> 
-            {this.state.user.map(user => {
+            {this.state.users.map(user => {
               return (
                 <h1>Hi, {user.firstname} {user.lastname}</h1>
               )
@@ -51,21 +51,26 @@ class UserView extends Component {
     const userData = {
       headers: {
         Authorization: token,
-      },
+      }
     };
 
   axios
   // make the requested ID dynamic
-    .get(`http://localhost:4000/api/5`, userData)
+    .get(`http://localhost:4000/api/8`, userData)
     .then(res => {
       console.log('User Data:', res);
       this.setState({
-        user: res.data
+        users: res.data
       });
     })
     .catch(err => {
       console.error('Axios respose:', err)
-    })
+    });
+
+    const user = this.state.users.map(user => {
+      return user.id
+    });
+    console.log("This is user", user);
   };
 }
 

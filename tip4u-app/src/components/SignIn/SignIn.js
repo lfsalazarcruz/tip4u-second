@@ -6,7 +6,7 @@ class SignIn extends Component {
 		super(props);
 		this.state = {
 				username: '',
-				password: '',
+        password: '',
 		};
 	}
 
@@ -52,7 +52,7 @@ class SignIn extends Component {
 		.then(res => {
 				console.log('Axios response', res);
         localStorage.setItem('jwt', res.data.token);
-				this.props.history.push('/userview');
+				this.props.history.push(`/userview/`);
 		})
 		.catch(err => {
 			this.props.history.push('/signin');
